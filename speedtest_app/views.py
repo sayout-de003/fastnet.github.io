@@ -21,6 +21,7 @@ def test_speed(request):
         while download_speed is None or upload_speed is None or ping is None:
             if download_speed is None:
                 download_speed = round(st.download() / 1_000_000, 2)  # Mbps
+                print(download_speed )
             if upload_speed is None:
                 upload_speed = round(st.upload() / 1_000_000, 2)  # Mbps
             if ping is None:
@@ -32,6 +33,7 @@ def test_speed(request):
                 'upload_speed': upload_speed,
                 'ping': ping,
             }
+
 
             # Simulate a small delay to update periodically
             import time
