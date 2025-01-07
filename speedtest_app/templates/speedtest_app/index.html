@@ -21,13 +21,13 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 60vh;
+            min-height: 100vh;
         }
 
         /* Main Content Section */
         .main-content {
             flex: 1;
-            padding: 20px;  /* Reduced padding */
+            padding: 20px;
             margin: 20px;
             background-color: #ffffff;
             border-radius: 10px;
@@ -35,18 +35,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
         h1 {
-            font-size: 32px;  /* Slightly smaller font size */
+            font-size: 32px;
             color: #333;
             margin-bottom: 15px;
         }
 
         /* Form Button */
         #startTest {
-            padding: 10px 20px;  /* Reduced padding */
-            font-size: 16px;  /* Reduced font size */
+            padding: 10px 20px;
+            font-size: 16px;
             color: white;
             background-color: #3498db;
             border: none;
@@ -67,7 +68,7 @@
         }
 
         #downloadSpeed, #uploadSpeed, #ping {
-            font-size: 18px;  /* Reduced font size */
+            font-size: 18px;
             margin-bottom: 15px;
             color: #555;
         }
@@ -77,8 +78,8 @@
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3498db;
             border-radius: 50%;
-            width: 40px;  /* Smaller spinner size */
-            height: 40px;  /* Smaller spinner size */
+            width: 40px;
+            height: 40px;
             animation: spin 2s linear infinite;
             display: inline-block;
         }
@@ -89,36 +90,29 @@
         }
 
         /* Sidebar for Ads (Right Side) */
+        .ads-container {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
         .sidebar {
-            position: fixed;
-            top: 10%;
-            height: 40vh;
-            right: 10px;
-            width: 30vh;  /* Increased width */
             background-color: #ffffff;
-            padding: 30px;  /* Increased padding */
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            margin-bottom: 30px;
         }
 
         /* Downbar (Bottom Ads) */
         .downbar {
             width: 100%;
-            height: 30vh;  /* Increased height */
-            padding: 25px;  /* Increased padding */
+            height: 200px;
             margin-top: 20px;
             background-color: #ffffff;
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
             text-align: center;
-        }
-
-        .downbar .ads-container {
-            margin-top: 10px;
+            padding: 20px;
         }
     </style>
 </head>
@@ -136,37 +130,41 @@
         <div id="uploadSpeed">Upload Speed: <span class="spinner"></span></div>
         <div id="ping">Ping: <span class="spinner"></span></div>
     </div>
-</div>
 
-<!-- Sidebar for Google Ads (Right Side) -->
-<div class="sidebar">
-    <div class="ads-container">
-        <!-- Google AdSense Ad Slot -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXX"  <!-- Replace with your Google AdSense client ID -->
-             data-ad-slot="XXXXXXX"            <!-- Replace with your Ad slot -->
-             data-ad-format="auto"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <!-- Sidebar for Ads -->
+    <div class="sidebar">
+        <div class="ads-container">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3593464892378237"
+                    crossorigin="anonymous"></script>
+            <!-- Ad Slot 996699 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3593464892378237"
+                 data-ad-slot="6050934883"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
-</div>
 
-<!-- Downbar for Google Ads (Bottom) -->
-<div class="downbar">
-    <div class="ads-container">
-        <!-- Google AdSense Ad Slot -->
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXX"  <!-- Replace with your Google AdSense client ID -->
-             data-ad-slot="XXXXXXX"            <!-- Replace with your Ad slot -->
-             data-ad-format="auto"></ins>
-        <script>
-             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+    <!-- Downbar for Ads -->
+    <div class="downbar">
+        <div class="ads-container">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3593464892378237"
+                    crossorigin="anonymous"></script>
+            <!-- Ad Slot 996699 -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3593464892378237"
+                 data-ad-slot="6050934883"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 </div>
 
