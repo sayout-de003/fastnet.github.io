@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-4peg^=j(l^ux=#90^q7bvd9-)x(y@+$riq#_*d%af#dzjeihkl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fastnet-github-io-1.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -126,3 +126,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 ASGI_APPLICATION = 'internet_speed_test.asgi.application'
+
+
