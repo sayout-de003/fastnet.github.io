@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXX-X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-XXXXXXX-X');
+    </script>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 60vh;
+        }
+
+        /* Main Content Section */
+        .main-content {
+            flex: 1;
+            padding: 20px;  /* Reduced padding */
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 32px;  /* Slightly smaller font size */
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Form Button */
+        #startTest {
+            padding: 10px 20px;  /* Reduced padding */
+            font-size: 16px;  /* Reduced font size */
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        #startTest:hover {
+            background-color: #2980b9;
+        }
+
+        /* Speed Results */
+        #speedResults {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #downloadSpeed, #uploadSpeed, #ping {
+            font-size: 18px;  /* Reduced font size */
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        /* Spinner Style */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;  /* Smaller spinner size */
+            height: 40px;  /* Smaller spinner size */
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Sidebar for Ads (Right Side) */
+        .sidebar {
+            position: fixed;
+            top: 10%;
+            height: 40vh;
+            right: 10px;
+            width: 30vh;  /* Increased width */
+            background-color: #ffffff;
+            padding: 30px;  /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Downbar (Bottom Ads) */
+        .downbar {
+            width: 100%;
+            height: 30vh;  /* Increased height */
+            padding: 25px;  /* Increased padding */
+            margin-top: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .downbar .ads-container {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-content">
+    <h1>Speed Test</h1>
+    <form id="speedtestForm" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="startTest">Start Test</button>
+    </form>
+
+    <div id="speedResults" style="display:none;">
+        <div id="downloadSpeed">Download Speed: <span class="spinner"></span></div>
+        <div id="uploadSpeed">Upload Speed: <span class="spinner"></span></div>
+        <div id="ping">Ping: <span class="spinner"></span></div>
+    </div>
+</div>
+
+<!-- Sidebar for Google Ads (Right Side) -->
+<div class="sidebar">
+    <div class="ads-container">
+        <!-- Google AdSense Ad Slot -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXX"  <!-- Replace with your Google AdSense client ID -->
+             data-ad-slot="XXXXXXX"            <!-- Replace with your Ad slot -->
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+<!-- Downbar for Google Ads (Bottom) -->
+<div class="downbar">
+    <div class="ads-container">
+        <!-- Google AdSense Ad Slot -->
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXX"  <!-- Replace with your Google AdSense client ID -->
+             data-ad-slot="XXXXXXX"            <!-- Replace with your Ad slot -->
+             data-ad-format="auto"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#startTest').click(function(e) {
+        e.preventDefault();  // Prevent form submission
+        
+        $('#speedResults').show();  // Show the results section
+        $('#downloadSpeed').html('Download Speed: <span class="spinner"></span>');
+        $('#uploadSpeed').html('Upload Speed: <span class="spinner"></span>');
+        $('#ping').html('Ping: <span class="spinner"></span>');
+        
+        var interval = setInterval(function() {
+            $.ajax({
+                url: "{% url 'test_speed' %}",
+                method: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function(data) {
+                    // Update results dynamically
+                    $('#downloadSpeed').html('Download Speed: ' + data.download_speed + ' Mbps');
+                    $('#uploadSpeed').html('Upload Speed: ' + data.upload_speed + ' Mbps');
+                    $('#ping').html('Ping: ' + data.ping + ' ms');
+
+                    // Stop the interval when all data is received
+                    if (data.download_speed && data.upload_speed && data.ping) {
+                        clearInterval(interval);
+                    }
+                }
+            });
+        }, 500);  // Request every 0.5 seconds
+    });
+});
+</script>
+
+</body>
+</html>
