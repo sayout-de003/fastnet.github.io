@@ -16,79 +16,63 @@
     <style>
         /* General Body Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
         }
 
-        /* Main Content Section */
-        .main-content {
-            padding: 20px;
-            margin: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        /* Main Container */
+        .main-container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 40px;
             width: 80%;
             max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-top: 50px;
+            text-align: center;
+            overflow: hidden;
         }
 
         h1 {
-            font-size: 32px;
+            font-size: 36px;
             color: #333;
-            margin-bottom: 20px;
-        }
-
-        /* Form Button */
-        #startTest {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #3498db;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
             margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
-        #startTest:hover {
-            background-color: #2980b9;
-        }
-
-        /* Speed Results (Make it Bigger and Position it at the Top) */
+        /* Speed Results Section */
         #speedResults {
-            position: absolute;
-            top: 20px;  /* Positioning at the top */
-            width: 100%;
-            text-align: center;
-            font-size: 30px; /* Bigger font size for better visibility */
-            color: #333;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            z-index: 10;
+            display: none;
+            margin-top: 30px;
         }
 
         #downloadSpeed, #uploadSpeed, #ping {
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            background: #f2f2f2;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Spinner Style (Bigger Spinner) */
         .spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #3498db;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
             border-radius: 50%;
-            width: 60px;  /* Increased size for spinner */
-            height: 60px; /* Increased size for spinner */
-            animation: spin 2s linear infinite;
+            width: 40px;
+            height: 40px;
+            animation: spin 1.5s linear infinite;
             display: inline-block;
         }
 
@@ -97,64 +81,110 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Sidebar for Ads (Right Side) */
-        .ads-container {
-            width: 100%;
-            text-align: center;
-            margin-top: 30px;
+        /* Start Test Button */
+        #startTest {
+            padding: 15px 40px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #f39c12;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
         }
 
-        /* Downbar (Bottom Ads) */
+        #startTest:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+
+        /* Sidebar for Ads */
+        .ads-container {
+            margin-top: 30px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .ads-container ins {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Downbar for Ads */
         .downbar {
             width: 100%;
             height: 200px;
-            margin-top: 30px;
+            margin-top: 40px;
             background-color: #ffffff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             text-align: center;
             padding: 20px;
+            border-radius: 10px;
         }
 
-        .sidebar {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px;
+        .downbar h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .main-container {
+                width: 90%;
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            #startTest {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
+            #downloadSpeed, #uploadSpeed, #ping {
+                font-size: 18px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="main-content">
-    <h1>Speed Test</h1>
+<div class="main-container">
+    <h1>Internet Speed Test</h1>
     <form id="speedtestForm" method="POST">
         {% csrf_token %}
         <button type="submit" id="startTest">Start Test</button>
     </form>
 
     <!-- Speed Results Positioned at the Top -->
-    <div id="speedResults" style="display:none;">
+    <div id="speedResults">
         <div id="downloadSpeed">Download Speed: <span class="spinner"></span></div>
         <div id="uploadSpeed">Upload Speed: <span class="spinner"></span></div>
         <div id="ping">Ping: <span class="spinner"></span></div>
     </div>
 
     <!-- Sidebar for Ads -->
-    <div class="sidebar">
-        <div class="ads-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-3593464892378237"
-                 data-ad-slot="6050934883"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
+    <div class="ads-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-3593464892378237"
+             data-ad-slot="6050934883"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
     </div>
 
     <!-- Downbar for Ads -->
     <div class="downbar">
+        <h3>Check out these great offers!</h3>
         <div class="ads-container">
             <ins class="adsbygoogle"
                  style="display:block"
