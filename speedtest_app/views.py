@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from speedtest import Speedtest
 
+
 def index(request):
     return render(request, 'speedtest_app/index.html')
 
@@ -37,7 +38,7 @@ def test_speed(request):
 
             # Simulate a small delay to update periodically
             import time
-            time.sleep(0.5)
+            time.sleep(1)
 
             # Send incremental updates
             if download_speed is None or upload_speed is None or ping is None:
